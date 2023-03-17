@@ -1,33 +1,127 @@
-﻿@model CounterViewModel
+﻿@using NMT_Counter.BLL.Extentions;
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="form-container">
     <div class="form">
-        <h2>Оцінка НМТ(200-т бальна)</h2>
-        <label>Перший предмет: </label>
-        <input type="text" asp-for="Marks.FirstSubject" id="sub_1" />
-        <label>Другий предмет: </label>
-        <input type="text" asp-for="Marks.SecondSubject" id="sub_2" />
-        <label>Третій предмет: </label>
-        <input type="text" asp-for="Marks.ThirdSubject" id="sub_3" />
-        <h2>Коефіцієнти</h2>
-        <label>Перший коофіцієнт: </label>
-        <input type="text" asp-for="Coefficient.FirstCoef" id="coef_1" />
-        <label>Другий коофіцієнт: </label>
-        <input type="text" asp-for="Coefficient.SecondCoef" id="coef_2" />
-        <label>Третій коофіцієнт: </label>
-        <input type="text" asp-for="Coefficient.ThirdCoef" id="coef_3" />
+        <div class="form-row">
+            <div class="form-header">
+                <h2>Оцінка НМТ</h2>
+            </div>
+            <div class="form-body">
+                <div class="form-item">
+                    <label class="label-subj" id="sub_1">Перший предмет: </label>
+                    <select class="select-subj" id="sub_1">
+                        @foreach (SubjectsViewModel item in Enum.GetValues(typeof(SubjectsViewModel)))
+                        {
+                            int num = (int)item;
+                            var name = item.GetDisplayName();
 
-        <button class="submit">Порахувати</button>
-    </div>
-    <h2>Результат</h2>
-    <div class="result">
+                            <option value="@num">@name</option>
+                        }
+                    </select>
+                    <input class="input-subj subj_1" type="text" id="sub_1" />
+                </div>
+                <div class="form-item">
+                    <label class="label-subj" id="sub_2">Другий предмет: </label>
+                    <select class="select-subj" id="sub_2">
+                        @foreach (SubjectsViewModel item in Enum.GetValues(typeof(SubjectsViewModel)))
+                        {
+                            int num = (int)item;
+                            var name = item.GetDisplayName();
 
+                            <option value="@num">@name</option>
+                        }
+                    </select>
+                    <input class="input-subj subj_2" type="text" id="sub_2" />
+                </div>
+                <div class="form-item">
+                    <label class="label-subj" id="sub_3">Третій предмет: </label>
+                    <select class="select-subj" id="sub_3">
+                        @foreach (SubjectsViewModel item in Enum.GetValues(typeof(SubjectsViewModel)))
+                        {
+                            int num = (int)item;
+                            var name = item.GetDisplayName();
+
+                            <option value="@num">@name</option>
+                        }
+                    </select>
+                    <input class="input-subj subj_3" type="text" id="sub_3" />
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-header">
+                <h2>Коефіцієнти</h2>
+            </div>
+            <div class="form-body">
+                <div class="form-item">
+                    <label>Перший коофіцієнт: </label>
+                    <input type="text" id="coef_1" />
+                </div>
+                <div class="form-item">
+                    <label>Другий коофіцієнт: </label>
+                    <input type="text" id="coef_2" />
+                </div>
+                <div>
+                    <label>Третій коофіцієнт: </label>
+                    <input type="text" id="coef_3" />
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <button class="submit">Порахувати</button>
+        </div>
     </div>
 </div>
+<h2>Результат</h2>
+<div class="result">
+
+</div>
+
+<style>
+    input {
+        outline: none;
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: center;
+    }
+    .form-header {
+        text-align: center;
+    }
+    .label-subj {
+        position: absolute;
+    }
+    .label-subj-hidden {
+        display: none;
+    }
+    .select-subj {
+        visibility: hidden;
+        opacity: 0;
+        transition: .3s;
+    }
+
+    .select-show {
+        visibility: visible;
+        opacity: 1;
+    }
+    .input-true-val {
+        background: #EAFFE8;
+        border: 1px solid #76B77A;
+        border-radius: 3px;
+        padding: 1.8px 2.8px;
+    }
+    .input-false-val {
+        background: #F7E1E1;
+        border: 1px solid #BD0505;
+        border-radius: 3px;
+        padding: 1.8px 2.8px;
+    }
+</style>
 
 <script>
     const model = {
@@ -40,21 +134,68 @@
             firstCoef: 0,
             secondCoef: 0,
             thirdCoef: 0
-        }
+        },
+        subjects: []
     }
+
+    document.querySelectorAll('.input-subj').forEach(input => {
+        input.addEventListener('input', (e) => {
+            if (+input.value <= 54 && +input.value != 0) {
+                input.classList.remove('input-false-val')
+
+                document.querySelectorAll('.select-subj').forEach(select => {
+                    if (input.id == select.id)
+                        select.classList.add('select-show')
+                })
+
+                document.querySelectorAll('.label-subj').forEach(label => {
+                    if (input.id == label.id)
+                        label.classList.add('label-subj-hidden')
+                })
+            }
+            else if (+input.value >= 120 && +input.value <= 200 || +input.value == 0) {
+                input.classList.remove('input-false-val')
+
+                document.querySelectorAll('.label-subj').forEach(label => {
+                    if (input.id == label.id)
+                        label.classList.remove('label-subj-hidden')
+                })
+
+                document.querySelectorAll('.select-subj').forEach(select => {
+                    if (input.id == select.id)
+                        select.classList.remove('select-show')
+                })
+            }
+            else {
+                input.classList.add('input-false-val')
+            }
+        })
+        input.addEventListener('focus', (e) => {
+            if (input.value != '')
+                input.classList.remove('input-true-val')
+        })
+        input.addEventListener('focusout', (e) => {
+            if (input.value != '')
+                input.classList.add('input-true-val')
+        })
+    })
 
     document.querySelector('.submit').addEventListener('click', (e) => {
         model.marks = {
-                firstSubject: +document.querySelector('#sub_1').value,
-                secondSubject: +document.querySelector('#sub_2').value,
-                thirdSubject: +document.querySelector('#sub_3').value
+                firstSubject: +document.querySelector('.subj_1').value,
+                secondSubject: +document.querySelector('.subj_2').value,
+                thirdSubject: +document.querySelector('.subj_3').value
             }
         model.coefficient = {
                 firstCoef: +document.querySelector('#coef_1').value,
                 secondCoef: +document.querySelector('#coef_2').value,
                 thirdCoef: +document.querySelector('#coef_3').value
             }
+        document.querySelectorAll('.select-subj').forEach(select => {
+            model.subjects.push(+select.value)
+        })
         
+        console.log(JSON.stringify(model))
         fetch('/Home/Index/', {
             method: 'POST',
             headers: {
