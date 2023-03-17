@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NMT_Counter.BLL\NMT_Counter.BLL.csproj" />
+  </ItemGroup>
+
 </Project>

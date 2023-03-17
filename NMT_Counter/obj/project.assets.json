@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "NMT_Counter.BLL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/NMT_Counter.BLL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/NMT_Counter.BLL.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "NMT_Counter.BLL/1.0.0": {
+      "type": "project",
+      "path": "../NMT_Counter.BLL/NMT_Counter.BLL.csproj",
+      "msbuildProject": "../NMT_Counter.BLL/NMT_Counter.BLL.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "NMT_Counter.BLL >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\computer\\.nuget\\packages\\": {},
@@ -38,7 +57,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "Q:\\GitHub\\NMT_Counter\\NMT_Counter.BLL\\NMT_Counter.BLL.csproj": {
+              "projectPath": "Q:\\GitHub\\NMT_Counter\\NMT_Counter.BLL\\NMT_Counter.BLL.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

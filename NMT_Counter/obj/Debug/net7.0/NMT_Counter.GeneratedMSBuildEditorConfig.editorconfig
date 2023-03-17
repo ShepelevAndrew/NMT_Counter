@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = Q:\GitHub\NMT_Counter\NMT_Counter
 build_property._RazorSourceGeneratorDebug = 
 
+[Q:/GitHub/NMT_Counter/NMT_Counter/Views/Home/Count.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb3VudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [Q:/GitHub/NMT_Counter/NMT_Counter/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

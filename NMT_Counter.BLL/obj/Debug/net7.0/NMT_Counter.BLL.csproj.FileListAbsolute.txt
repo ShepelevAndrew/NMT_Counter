@@ -1,0 +1,12 @@
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\bin\Debug\net7.0\NMT_Counter.BLL.deps.json
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\bin\Debug\net7.0\NMT_Counter.BLL.dll
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\bin\Debug\net7.0\NMT_Counter.BLL.pdb
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\NMT_Counter.BLL.csproj.AssemblyReference.cache
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\NMT_Counter.BLL.GeneratedMSBuildEditorConfig.editorconfig
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\NMT_Counter.BLL.AssemblyInfoInputs.cache
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\NMT_Counter.BLL.AssemblyInfo.cs
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\NMT_Counter.BLL.csproj.CoreCompileInputs.cache
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\NMT_Counter.BLL.dll
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\refint\NMT_Counter.BLL.dll
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\NMT_Counter.BLL.pdb
+Q:\GitHub\NMT_Counter\NMT_Counter.BLL\obj\Debug\net7.0\ref\NMT_Counter.BLL.dll

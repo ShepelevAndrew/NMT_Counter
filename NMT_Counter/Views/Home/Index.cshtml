@@ -1,8 +1,75 @@
-﻿@{
+﻿@model CounterViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="form">
+        <h2>Оцінка НМТ(200-т бальна)</h2>
+        <label>Перший предмет: </label>
+        <input type="text" asp-for="Marks.FirstSubject" id="sub_1" />
+        <label>Другий предмет: </label>
+        <input type="text" asp-for="Marks.SecondSubject" id="sub_2" />
+        <label>Третій предмет: </label>
+        <input type="text" asp-for="Marks.ThirdSubject" id="sub_3" />
+        <h2>Коефіцієнти</h2>
+        <label>Перший коофіцієнт: </label>
+        <input type="text" asp-for="Coefficient.FirstCoef" id="coef_1" />
+        <label>Другий коофіцієнт: </label>
+        <input type="text" asp-for="Coefficient.SecondCoef" id="coef_2" />
+        <label>Третій коофіцієнт: </label>
+        <input type="text" asp-for="Coefficient.ThirdCoef" id="coef_3" />
+
+        <button class="submit">Порахувати</button>
+    </div>
+    <h2>Результат</h2>
+    <div class="result">
+
+    </div>
 </div>
+
+<script>
+    const model = {
+        marks: {
+            firstSubject: 0,
+            secondSubject: 0,
+            thirdSubject: 0
+        },
+        coefficient: {
+            firstCoef: 0,
+            secondCoef: 0,
+            thirdCoef: 0
+        }
+    }
+
+    document.querySelector('.submit').addEventListener('click', (e) => {
+        model.marks = {
+                firstSubject: +document.querySelector('#sub_1').value,
+                secondSubject: +document.querySelector('#sub_2').value,
+                thirdSubject: +document.querySelector('#sub_3').value
+            }
+        model.coefficient = {
+                firstCoef: +document.querySelector('#coef_1').value,
+                secondCoef: +document.querySelector('#coef_2').value,
+                thirdCoef: +document.querySelector('#coef_3').value
+            }
+        
+        fetch('/Home/Index/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(model)
+        }).then((resp) => {
+            resp.json().then((data) => {
+                render(data)
+            })
+        })
+    })
+
+    function render(mark) {
+        let html = `<div class="result-item">${mark}</div>`
+        document.querySelector('.result').innerHTML += html
+    }
+</script>

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "NMT_Counter.BLL/1.0.0": {
+        "runtime": {
+          "NMT_Counter.BLL.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NMT_Counter.BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
