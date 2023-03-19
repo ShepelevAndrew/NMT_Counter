@@ -25,9 +25,25 @@ namespace NMT_Counter.Controllers
         [HttpPost]
         public IActionResult Index([FromBody] CounterViewModel model)
         {
-            double nmtMark = _counterService.Count(model.Marks, model.Coefficient);
+            double nmtMark = _counterService.Count(model.Marks, model.Coefficient, model.Subjects);
 
             return Json(nmtMark);
+        }
+
+        [HttpPost]
+        public IActionResult ThreeVariants([FromBody] CounterThreeVariantsViewModel model)
+        {
+            var nmtMarks = _counterService.CountThreeVariants(model.Marks, model.Coefficient, model.Subjects);
+
+            return Json(nmtMarks);
+        }
+
+        [HttpPost]
+        public IActionResult Intersection([FromBody] CounterThreeVariantsViewModel model)
+        {
+            var nmtMarks = _counterService.FindIntersection(model.Marks, model.Coefficient, model.Subjects);
+
+            return Json(nmtMarks);
         }
 
         public IActionResult Privacy()

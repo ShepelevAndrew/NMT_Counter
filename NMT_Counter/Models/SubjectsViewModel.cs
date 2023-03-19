@@ -9,7 +9,7 @@ public enum SubjectsViewModel
     Math,
     [Display(Name = "Історія України")]
     History,
-    [Display(Name = "Англійська мова")]
+    [Display(Name = "Іноземна мова")]
     English,
     [Display(Name = "Фізика")]
     Physics,

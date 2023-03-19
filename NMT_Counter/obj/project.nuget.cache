@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "AaPeVnX0M/tzdLyVzkpFNozzxOdV8B5V7OU59kArDflXQ0o6kXWSNKRisePsqhHdfvsNgaVG9TkMQiHpPgG6Pg==",
+  "dgSpecHash": "HyYRh+B8tu8VyqaPm106AiAz7aBYc3SSF/aoNJeBfvpSEWy50zwFUPsly9fp9ofFFMbYb3Ts5j/+6V17c84WpA==",
   "success": true,
   "projectFilePath": "Q:\\GitHub\\NMT_Counter\\NMT_Counter\\NMT_Counter.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\computer\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
   "logs": []
 }

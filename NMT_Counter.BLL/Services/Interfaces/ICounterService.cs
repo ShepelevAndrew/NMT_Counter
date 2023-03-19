@@ -1,10 +1,10 @@
 ﻿using NMT_Counter.BLL.BusinessModels;
 using NMT_Counter.BLL.Domain;
 
-namespace NMT_Counter.BLL.Services.Interfaces
+namespace NMT_Counter.BLL.Services.Interfaces;
+public interface ICounterService
 {
-    public interface ICounterService
-    {
-        double Count(NMTMarks marks, Coefficients coefficient, List<Subjects> subjects = null);
-    }
+    double Count(List<double> marks, List<double> coefficient, List<Subjects> subjects);
+    Dictionary<double, double> CountThreeVariants(List<double> nmtMarks, List<List<double>> coefficient, List<Subjects> subjects);
+    Dictionary<double, double> FindIntersection(List<double> nmtMarks, List<List<double>> coefficient, List<Subjects> subjects);
 }

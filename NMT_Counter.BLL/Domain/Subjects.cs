@@ -1,13 +1,11 @@
-﻿namespace NMT_Counter.BLL.Domain
+﻿namespace NMT_Counter.BLL.Domain;
+public enum Subjects
 {
-    public enum Subjects
-    {
-        Ukrainian,
-        Math,
-        History,
-        English,
-        Physics,
-        Biology,
-        Chemistry
-    }
+    Ukrainian,
+    Math,
+    History,
+    English,
+    Physics,
+    Biology,
+    Chemistry
 }

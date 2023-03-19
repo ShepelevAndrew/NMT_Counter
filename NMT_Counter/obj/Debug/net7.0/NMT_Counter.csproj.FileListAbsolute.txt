@@ -32,3 +32,4 @@ Q:\GitHub\NMT_Counter\NMT_Counter\obj\Debug\net7.0\refint\NMT_Counter.dll
 Q:\GitHub\NMT_Counter\NMT_Counter\obj\Debug\net7.0\NMT_Counter.pdb
 Q:\GitHub\NMT_Counter\NMT_Counter\obj\Debug\net7.0\NMT_Counter.genruntimeconfig.cache
 Q:\GitHub\NMT_Counter\NMT_Counter\obj\Debug\net7.0\ref\NMT_Counter.dll
+Q:\GitHub\NMT_Counter\NMT_Counter\bin\Debug\net7.0\Newtonsoft.Json.dll
