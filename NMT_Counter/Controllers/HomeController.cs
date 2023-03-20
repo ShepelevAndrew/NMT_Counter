@@ -17,6 +17,7 @@ namespace NMT_Counter.Controllers
             _counterService = counterService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

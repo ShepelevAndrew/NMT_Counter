@@ -32,7 +32,7 @@ public class CounterService : ICounterService
             {
                 coefsOfSubjs.Add(coefList[0]);
             }
-            else if (coefList.Count == 3)
+            else if (coefList.Count > 1)
             {
                 foreach(var coef in coefList) {
                     coefsOfSubjs.Add(coef);
@@ -83,21 +83,6 @@ public class CounterService : ICounterService
             resultDict.Add(coefOfSubj[i], formulaOfIntersection);
 
         return resultDict;
-
-        /*foreach(int nmtMark in nmtMarks) {
-            if(nmtMark == 0) {
-                    var index = nmtMarks.LastIndexOf(nmtMark);
-                    
-                for (int i = minNMTMark; i < maxNMTMark; i++)
-                {
-                    nmtMarks[index] = i;
-
-                    var resultNMTMark = CountThreeVariants(nmtMarks, coefficient, subjects);
-
-                    resultNMTMarks.Add(resultNMTMark);
-                }
-            }
-        }*/
     }
 
     private double CountNMTMark(List<double> nmtMarks, List<double> coefficient)
@@ -113,8 +98,12 @@ public class CounterService : ICounterService
         var jsonLoader = new JsonLoader();
 
         int i = 0;
+        const int minNmrMark = 100;
         foreach (var subject in subjects)
         {
+            if (nmtMarks[i] >= minNmrMark)
+                i++;
+
             var marksDictionary = jsonLoader.LoadInfoFromJson(subject);
             var mark = marksDictionary[nmtMarks[i]];
 
