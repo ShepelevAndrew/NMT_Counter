@@ -1,8 +1,377 @@
-﻿@{
+﻿@using NMT_Counter.BLL.Extentions;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="form-container">
+    <div class="form">
+        <div class="form-row">
+            <div class="form-header">
+                <h2>Оцінка НМТ</h2>
+            </div>
+            <div class="form-body">
+                <div class="form-item">
+                    <label class="label-subj" id="sub_1">Перший предмет: </label>
+                    <select class="select-subj" id="sub_1">
+                        <option value="-1">Предмет</option>
+                        @foreach (SubjectsViewModel item in Enum.GetValues(typeof(SubjectsViewModel)))
+                        {
+                            int num = (int)item;
+                            var name = item.GetDisplayName();
+
+                            <option value="@num">@name</option>
+                        }
+                    </select>
+                    <input class="input-subj subj_1" type="text" id="sub_1" />
+                </div>
+                <div class="form-item">
+                    <label class="label-subj" id="sub_2">Другий предмет: </label>
+                    <select class="select-subj" id="sub_2">
+                        <option value="-1">Предмет</option>
+                        @foreach (SubjectsViewModel item in Enum.GetValues(typeof(SubjectsViewModel)))
+                        {
+                            int num = (int)item;
+                            var name = item.GetDisplayName();
+
+                            <option value="@num">@name</option>
+                        }
+                    </select>
+                    <input class="input-subj subj_2" type="text" id="sub_2" />
+                </div>
+                <div class="form-item">
+                    <label class="label-subj" id="sub_3">Третій предмет: </label>
+                    <select class="select-subj" id="sub_3">
+                        <option value="-1">Предмет</option>
+                        @foreach (SubjectsViewModel item in Enum.GetValues(typeof(SubjectsViewModel)))
+                        {
+                            int num = (int)item;
+                            var name = item.GetDisplayName();
+
+                            <option value="@num">@name</option>
+                        }
+                    </select>
+                    <input class="input-subj" type="text" id="sub_3" />
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-header">
+                <h2>Коефіцієнти</h2>
+            </div>
+            <div class="form-body">
+                <div class="form-item">
+                    <label>Перший коофіцієнт: </label>
+                    <input class="input-coef" type="text" id="coef_1" />
+                </div>
+                <div class="form-item">
+                    <label>Другий коофіцієнт: </label>
+                    <input class="input-coef" type="text" id="coef_2" />
+                </div>
+                <div>
+                    <label>Третій коофіцієнт: </label>
+                    <input class="input-coef" type="text" id="coef_3" />
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <button class="submit">Порахувати</button>
+            <button class="know-more">Дізнатись, що вигідніше</button>
+            <button class="what-mark">Скіки треба набрати</button>
+        </div>
+    </div>
 </div>
+<div class="result-container">
+    <div class="result-row">
+        <h2>Результат</h2>
+        <div class="result"></div>
+    </div>
+</div>
+<div id="container-graph"></div>
+
+<style>
+    input {
+        outline: none;
+    }
+    input::selection {
+        background-color: #BD0505;
+        color: white;
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: center;
+    }
+    .form-header {
+        text-align: center;
+    }
+    .label-subj {
+        position: absolute;
+    }
+    .label-subj-hidden {
+        display: none;
+    }
+    .select-subj {
+        visibility: hidden;
+        opacity: 0;
+        transition: .3s;
+    }
+
+    .select-show {
+        visibility: visible;
+        opacity: 1;
+    }
+    .input-true-val {
+        background: #EAFFE8;
+        border: 1px solid #76B77A;
+        border-radius: 3px;
+        padding: 1.8px 2.8px;
+    }
+    .input-false-val {
+        background: #F7E1E1;
+        border: 1px solid #BD0505;
+        border-radius: 3px;
+        padding: 1.8px 2.8px;
+    }
+    .result-container {
+        display: flex;
+        justify-content: center;
+    }
+    #container-graph {
+        height: 250px;
+    }
+</style>
+
+<!--Desmos API-->
+<script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+<script>
+    const model = {
+        marks: [],
+        coefficient: [],
+        subjects: []
+    }
+
+    document.querySelectorAll('.input-subj').forEach(input => {
+
+        input.addEventListener('input', (e) => {
+            if (+input.value <= 54 && +input.value != 0) {
+                input.classList.remove('input-false-val')
+
+                document.querySelectorAll('.select-subj').forEach(select => {
+                    if (input.id == select.id)
+                        select.classList.add('select-show')
+                })
+
+                document.querySelectorAll('.label-subj').forEach(label => {
+                    if (input.id == label.id)
+                        label.classList.add('label-subj-hidden')
+                })
+            }
+            else if (+input.value >= 120 && +input.value <= 200 || +input.value == 0) {
+                input.classList.remove('input-false-val')
+
+                document.querySelectorAll('.label-subj').forEach(label => {
+                    if (input.id == label.id)
+                        label.classList.remove('label-subj-hidden')
+                })
+
+                document.querySelectorAll('.select-subj').forEach(select => {
+                    if (input.id == select.id) {
+                        select.value = -1
+                        select.classList.remove('select-show')
+                    }
+                })
+            }
+            else {
+                input.classList.add('input-false-val')
+            }
+        })
+
+        input.addEventListener('focus', (e) => {
+            if (input.value != '')
+                input.classList.remove('input-true-val')
+        })
+
+        input.addEventListener('focusout', (e) => {
+            if (input.value != '')
+                input.classList.add('input-true-val')
+        })
+    })
+
+    document.querySelector('.submit').addEventListener('click', (e) => {
+        
+        model.marks = []
+        document.querySelectorAll('.input-subj').forEach(input => {
+            model.marks.push(+input.value)
+        })
+
+        model.coefficient = []
+        document.querySelectorAll('.input-coef').forEach(input => {
+            model.coefficient.push(+input.value)
+        })
+        
+        model.subjects = []
+        document.querySelectorAll('.select-subj').forEach(select => {
+            if (+select.value != -1)
+                model.subjects.push(+select.value)
+        })
+        
+        fetch('/Home/Index/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(model)
+        }).then((resp) => {
+            resp.json().then((data) => {
+                clear()
+                render(data)
+            })
+        })
+    })
+
+    document.querySelector('.know-more').addEventListener('click', (e) => {
+
+        model.subjects = []
+        document.querySelectorAll('.select-subj').forEach(select => {
+            if (+select.value != -1)
+                model.subjects.push(+select.value)
+        })
+
+        model.marks = []
+        document.querySelectorAll('.input-subj').forEach(input => {
+            model.marks.push(+input.value)
+        })
+
+        model.coefficient = []
+        document.querySelectorAll('.input-coef').forEach(input => {
+            const input_value = input.value;
+            const number = input_value.split(" ").map(num => parseFloat(num))
+
+            model.coefficient.push(number)
+        })
+
+        fetch('/Home/ThreeVariants/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(model)
+        }).then((resp) => {
+            resp.json().then((data) => {
+                clear()
+                renderForDictionary(data)
+            })
+        })
+    })
+
+    document.querySelector('.what-mark').addEventListener('click', (e) => {
+
+        model.subjects = []
+        document.querySelectorAll('.select-subj').forEach(select => {
+            if (+select.value != -1)
+                model.subjects.push(+select.value)
+        })
+
+        model.coefficient = []
+        document.querySelectorAll('.input-coef').forEach(input => {
+            const input_value = input.value;
+            const number = input_value.split(" ").map(num => parseFloat(num))
+
+            model.coefficient.push(number)
+        })
+
+        model.marks = []
+        document.querySelectorAll('.input-subj').forEach(input => {
+            if(+input.value != 0)
+                model.marks.push(+input.value)
+        })
+
+        fetch('/Home/Intersection/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(model)
+        }).then((resp) => {
+            resp.json().then((data) => {
+                clear()
+                renderIntersection(data)
+            })
+        })
+    })
+
+    function clear() {
+        document.querySelector('.result').innerHTML = '';
+        document.querySelector('#container-graph').innerHTML = ''
+    }
+
+    function render(mark) {
+        let html = `<div class="result-item">${mark}</div>`
+        document.querySelector('.result').innerHTML += html
+    }
+
+    function renderForDictionary(marks) {
+        let html = '<div class="result-block">';
+        for (var mark in marks) {
+            html += `<div class="result-item">${mark} - ${marks[mark]}</div>`
+        }
+        html += `</div>`;
+        document.querySelector('.result').innerHTML += html
+    }
+
+    function renderIntersection(marks) {
+        let html = '<div class="result-block">';
+
+        let word = '';
+        let word2 = '';
+        const max = Math.max(...Object.keys(marks))
+        const min = Math.min(...Object.keys(marks))
+        for (var mark in marks) {
+            if (+mark == +max) {
+                word = 'більше'
+                word2 = 'вище'
+            }
+            else if (+mark == +min) {
+                word = 'менше'
+                word2 = 'вище'
+            }
+            else {
+                word = 'більше або менше'
+                word2 = 'середній'
+            }
+
+            html += `<div class="result-item">Предмет з кооф. ${mark} ${word2} по рейтингу, якщо ви отримали ${word} ${marks[mark]}.</div>`
+        }
+        html += `</div>`;
+
+        document.querySelector('.result').innerHTML += html
+
+        const elt = document.querySelector('#container-graph');
+        let calculator = {}
+        if (document.querySelector('#container-graph').innerHTML == "") {
+            calculator = Desmos.GraphingCalculator(elt, {
+                keypad: false,
+                expressions: false,
+                settingsMenu: false,
+                zoomButtons: false,
+            });
+        }
+
+        calculator.setMathBounds({
+            left: 115,
+            right: 205,
+            bottom: 115,
+            top: 205
+        });
+
+        for(var coef in model.coefficient[2]) {
+            let graph = `y=(${model.marks[0]}*0.3+${model.marks[1]}*0.5+x*${model.coefficient[2][coef]})/(0.3+0.5+${model.coefficient[2][coef]}) \\{120<=x<=200\\}\\{120<=y<=200\\}`
+
+            calculator.setExpression({
+                latex: graph
+            });
+        }
+    }
+</script>

@@ -1,7 +1,12 @@
+using NMT_Counter.BLL.Services.Implementations;
+using NMT_Counter.BLL.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddTransient<ICounterService, CounterService>();
 
 var app = builder.Build();
 
